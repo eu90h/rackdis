@@ -338,6 +338,10 @@
     (define/public (concat key value)
       (apply-cmd "APPEND" (list key value))
       (get-response))
+
+    (define/public (slowlog subcommand [arg null])
+      (apply-cmd "SLOWLOG" (append (list subcommand) arg))
+      (get-response))
     
     (define/public (strlen key)
       (apply-cmd "STRLEN" key)
@@ -443,10 +447,30 @@
       (apply-cmd "TTL" key)
       (get-response))
 
+    (define/public (time)
+      (apply-cmd "TIME")
+      (get-response))
+    
     (define/public (move key index)
       (apply-cmd "MOVE" (list key index))
       (get-response))
 
+    (define/public (multi)
+      (apply-cmd "MULTI")
+      (get-response))
+
+    (define/public (exec)
+      (apply-cmd "EXEC")
+      (get-response))
+    
+    (define/public (dump key)
+      (apply-cmd "DUMP" key)
+      (get-response))
+    
+    (define/public (discard)
+      (apply-cmd "DISCARD")
+      (get-response))
+    
     (define/public (flushdb)
       (apply-cmd "FLUSHDB")
       (get-response))
