@@ -323,6 +323,18 @@
       (apply-cmd "HLEN" key)
       (get-response))
 
+    (define/public (pfadd key element)
+      (apply-cmd "PFADD" (flatten (list key element)))
+      (get-response))
+
+    (define/public (pfcount key)
+      (apply-cmd "PFCOUNT" key)
+      (get-response))
+
+    (define/public (pfmerge destkey srckey)
+      (apply-cmd "PFMERGE" (flatten (list destkey srckey)))
+      (get-response))
+    
     (define/public (concat key value)
       (apply-cmd "APPEND" (list key value))
       (get-response))
