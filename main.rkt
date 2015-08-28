@@ -354,7 +354,11 @@
     (define/public (bitpos key bit [start null] [end null])
       (apply-cmd "BITPOS" (flatten (list key bit start end)))
       (get-response))
-
+    
+    (define/public (getbit key offset)
+      (apply-cmd "GETBIT" (list key offset))
+      (get-response))
+    
     (define/public (persist key)
       (apply-cmd "PERSIST" key)
       (get-response))
@@ -478,7 +482,25 @@
     (define/public (monitor)
       (apply-cmd "MONITOR")
       (get-response))
+    
+    (define/public (command)
+      (apply-cmd "COMMAND")
+      (get-response))
 
+    (define/public (command-count)
+      (apply-cmd "COMMAND COUNT")
+      (get-response))
+
+    (define/public (command-info cmd)
+      (apply-cmd "COMMAND INFO" cmd)
+      (get-response))
+    
+    ;command getkeys might be tricky to make a good interface for - its a meta command
+
+    (define/public (debug-segfault)
+      (apply-cmd "DEBUG SEGFAULT")
+      (get-response))
+    
     (define/public (object subcommand [args null])
       (apply-cmd "OBJECT" (append (list subcommand) args))
       (get-response))
