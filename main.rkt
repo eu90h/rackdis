@@ -355,6 +355,26 @@
       (apply-cmd "BITPOS" (flatten (list key bit start end)))
       (get-response))
 
+    (define/public (persist key)
+      (apply-cmd "PERSIST" key)
+      (get-response))
+
+    (define/public (pexpire key ms)
+      (apply-cmd "PEXPIRE" (list key ms))
+      (get-response))
+
+    (define/public (pexpireat key ms-timestamp)
+      (apply-cmd "PEXPIREAT" (list key ms-timestamp))
+      (get-response))
+
+    (define/public (psetex key ms val)
+      (apply-cmd "PSETEX" (list key ms val))
+      (get-response))
+    
+    (define/public (pttl key)
+      (apply-cmd "PTTL" key)
+      (get-response))
+    
     (define/public (watch key)
       (apply-cmd "WATCH" key)
       (get-response))
