@@ -120,19 +120,42 @@
       (get-response))
     
     (define/public (lrange key min max)
-      (apply-cmd "LRANGE" (list key min max))
+      (define min-i (if (number? min) (number->string min) min))
+      (define max-i (if (number? max) (number->string max) max))
+      (apply-cmd "LRANGE" (list key min-i max-i))
       (get-response))
 
     (define/public (ltrim key start end)
-      (apply-cmd "LTRIM" (list key start end))
+      (define start-i (if (number? start) (number->string start) start))
+      (define end-i (if (number? end) (number->string end) end))
+      (apply-cmd "LTRIM" (list key start-i end-i))
       (get-response))
 
     (define/public (lindex key index)
-      (apply-cmd "LINDEX" (list key index))
+      (define ind (if (number? index) (number->string index) index))
+      (apply-cmd "LINDEX" (list key ind))
       (get-response))
 
     (define/public (lset key index value)
+      (define ind (if (number? index) (number->string index) index))
       (apply-cmd "LSET" (list key index value))
+      (get-response))
+
+    (define/public (linsert key before/after pivot value)
+        (apply-cmd "LINSERT" (list key before/after pivot value))
+        (get-response))
+
+    (define/public (llen key)
+      (apply-cmd "LLEN" key)
+      (get-response))
+
+    (define/public (lpushx key value)
+      (apply-cmd "LPUSHX" (list key value))
+      (get-response))
+
+    (define/public (lrem key count value)
+      (define c (if (number? count) (number->string count) count))
+      (apply-cmd "LREM" (list key c value))
       (get-response))
 
     (define/public (lpop key string)
